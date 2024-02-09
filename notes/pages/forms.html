@@ -1,0 +1,773 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Forms </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="174be3dd-5f32-4dd2-a2a1-e162e9abc4d6" class="page sans"><header><h1 class="page-title">Forms </h1><p class="page-description"></p></header><div class="page-body"><nav id="258b8363-5e95-4a96-93d1-a42cb0378c45" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8fdbb51c-6a0a-4d58-b5e0-f7643061c959">Forms overview </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d06125be-c764-485c-a23e-7c56891495d8">Template driven forms</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#be50c22f-3978-416e-9401-1e4de019df5f">Example | Template Driven Forms </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8810c8b3-c41f-41f2-bf3e-d6615adadc9e">Reactive Forms </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#128dbea5-936e-4ac0-a70b-aa326f03de52">example | Reactive Forms  </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b8f8e402-667d-4890-8611-ac4abf7d6c6a">Assignment| Reactive Forms  </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#db821f0d-ec12-4775-9c4e-b8b3b104076b">Dependency Injection (DI)</a></div></nav><hr id="d9a2922e-2038-47e0-9523-e6f929a49575"/><h1 id="8fdbb51c-6a0a-4d58-b5e0-f7643061c959" class="">Forms overview </h1><p id="432e548a-2beb-4bf0-b299-7208cb5b4a34" class="">Are used to get user input. </p><p id="4ddeea5e-df8d-47aa-be77-64c9081d16ae" class="">Angular has 2 ways to implement forms. <div class="indented"><ol type="1" id="db67feeb-6c6e-42e4-bb19-945d76091851" class="numbered-list" start="1"><li>Template driven forms </li></ol><ol type="1" id="23cf026a-86e2-4a23-a60c-9f95a473a304" class="numbered-list" start="2"><li>Reactive forms </li></ol></div></p><hr id="f9ad3c75-4558-42ce-86b1-9ed8bb7c7f59"/><h1 id="d06125be-c764-485c-a23e-7c56891495d8" class="">Template driven forms</h1><p id="4cc3c263-6b94-4c5b-b184-77b3d03a060a" class="">In template driven forms, the source of truth is the template. </p><p id="0e9930e1-73af-4da0-9aad-23ccaddca00f" class="">Is quick to setup and easy to use and is best for small one time use forms. </p><p id="effb04b0-8a11-4ee0-b570-27717a9228a1" class="">It requires more configuration for unit testing. </p><figure id="798aa529-d9e5-4376-8fa4-c3d1459e41c7"><a href="https://adrianbrand.medium.com/angular-two-way-binding-2914c41f2c61" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Angular two way binding</div><div class="bookmark-description">In Angular we have input properties</div></div><div class="bookmark-href"><img src="https://miro.medium.com/v2/resize:fill:152:152/1*sHhtYhaCe2Uc3IU0IgKwIQ.png" class="icon bookmark-icon"/>https://adrianbrand.medium.com/angular-two-way-binding-2914c41f2c61</div></div><img src="https://miro.medium.com/v2/1*kFrc4tBFM_tCis-2Ic87WA.png" class="bookmark-image"/></a></figure><blockquote id="adaca2c3-5d3b-4522-b955-aa2a63cfa99b" class=""><code>[(ngModel)]</code> is called banana box syntax. It allows to have 2 way data binding and is a combination of both <code>@Input()</code> and <code>@Output()</code> which means there should be a property named <code>username</code> and when the input form is changed, it will also change the value of the property. </blockquote><h3 id="be50c22f-3978-416e-9401-1e4de019df5f" class="">Example | Template Driven Forms </h3><p id="7feee013-5067-42ec-a914-2462c6e0687a" class=""><code>app.component.ts</code> </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="0095547e-a796-4d66-9cfc-ddf2d1e4ec33" class="code"><code class="language-JavaScript">@Component({
+	imports: [FormsModule], 
+	templateUrl: &#x27;app.component.html&#x27;
+})
+
+export class AppComponent {
+	username: &quot;&quot;; // initial value of &#x27;username&#x27; used in the form
+	password: &quot;&quot;; // initial value of &#x27;password&#x27; used in the form 
+}</code></pre><p id="ee9127c0-5e42-4a59-af89-669976da1265" class=""><code>app.component.html</code></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="01b42b92-bb3d-457f-ae56-aebac37bbb19" class="code"><code class="language-HTML">&lt;form name=&quot;loginForm&quot;&gt;
+  &lt;label for=&quot;username&quot;&gt;username: &lt;/label&gt;
+  &lt;input type=&quot;text&quot; id=&quot;&quot; [(ngModel)]=&quot;username&quot; /&gt;
+
+  &lt;label for=&quot;username&quot;&gt;password: &lt;/label&gt;
+  &lt;input type=&quot;password&quot; id=&quot;&quot; [(ngModel)]=&quot;password&quot; /&gt;
+
+  &lt;button type=&quot;submit&quot;&gt;Login&lt;/button&gt;
+&lt;/form&gt;</code></pre><hr id="c2a186db-0fa8-4b15-8547-fe3fc05db3c9"/><h1 id="8810c8b3-c41f-41f2-bf3e-d6615adadc9e" class="">Reactive Forms </h1><p id="46d8c763-878c-4a73-91b0-ccb4014ed690" class="">Supports typing </p><p id="61dab9d7-7136-4d2b-bcc0-cde07fff46b2" class="">Is reusable and also can share models (2 way data binding)</p><p id="e10e79c4-4935-4e21-a36e-a94854cddaeb" class="">Allows more robust testing configuration</p><p id="3f5ed931-0e4f-4b0d-ab2c-c8facffde269" class="">We need to define model in order to use reactive form using <code>ReactiveFormsModule</code> and <code>FormGroup</code></p><h2 id="128dbea5-936e-4ac0-a70b-aa326f03de52" class="">example | Reactive Forms  </h2><p id="eb167044-b189-4d20-9202-f53dfe4579cb" class=""><code>app.component.ts</code></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1443c7f6-d5da-4285-be3c-6085d8023501" class="code"><code class="language-JavaScript">@Component({
+	imports: [ReactiveFormsModule], 
+	templateUrl: &#x27;app.component.html&#x27;
+})
+
+export class AppComponent {
+	// creating new FormGroup
+	loginForm = new FormGroup({
+		name: new FormControl(&#x27;&#x27;), 
+		email: new FormControl(&#x27;&#x27;)
+	})
+
+	handleSubmit(){
+		console.log(&quot;handling form&quot;); 
+		// accessing the values of the loginForm FormGroup
+		this.loginWithCredentials(this.loginForm.value)  
+	}
+}</code></pre><blockquote id="9b445af0-a60a-439c-824a-94657ade58f1" class="">Note: <code>FormControl</code> accepts only defined data type</blockquote><p id="735defdf-9618-46bc-8a8b-7928f233a316" class=""><code>app.component.html</code></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="30aa146f-a74c-4b65-b63c-9e59e81d7899" class="code"><code class="language-HTML">&lt;!-- implementing formGroup to form, adding submit event handler --&gt;
+&lt;form name=&quot;loginForm&quot; [formGroup]=&quot;loginForm&quot; (ngSubmit)=&quot;handleSubmit()&quot;&gt;
+  &lt;label for=&quot;username&quot;&gt;Username: &lt;/label&gt;
+  &lt;!-- reactive way to bind name --&gt;
+	&lt;!-- not using property binding &quot;[ ]&quot; since the values are known are not passed dynamically --&gt;
+	&lt;input type=&quot;text&quot; formControlName=&quot;username&quot; /&gt; 
+	
+
+  &lt;label for=&quot;password&quot;&gt;Password: &lt;/label&gt;
+  &lt;!-- reactive way to bind name --&gt;
+	&lt;!-- not using property binding &quot;[ ]&quot; since the values are known are not passed dynamically --&gt;
+  &lt;input type=&quot;text&quot; formControlName=&quot;password&quot; /&gt;
+
+  &lt;button type=&quot;submit&quot;&gt;Login&lt;/button&gt;
+&lt;/form&gt;</code></pre><h2 id="b8f8e402-667d-4890-8611-ac4abf7d6c6a" class="">Assignment| Reactive Forms  </h2><p id="1d31da5a-f191-4cd4-811e-754102447509" class="">solved assignment: <code>10-reactive-forms</code></p><p id="0dfa244a-c718-4a7f-b2fb-9a220c2568d4" class=""><code>app.component.ts</code></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="df186a03-1239-45bf-b610-67272b67a017" class="code"><code class="language-JavaScript">import { Component } from &#x27;@angular/core&#x27;;
+import { FormControl, FormGroup, ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
+
+@Component({
+  selector: &#x27;app-root&#x27;,
+  standalone: true,
+  imports: [ReactiveFormsModule],
+  template: &#x27;app.component.html&#x27;,
+  styles: [],
+})
+export class AppComponent {
+  blogForm = new FormGroup({
+    title: new FormControl(&#x27;&#x27;),
+    body: new FormControl(&#x27;&#x27;),
+  });
+
+  handleFormSubmit() {
+    const { body, title } = this.blogForm.value;
+    this.postBlog(title, body);
+  }
+
+  postBlog(title: string | null | undefined, body: string | null | undefined) {
+    console.log(`Posting blog titles ${title}, with the contents ${body}.`);
+  }
+}</code></pre><p id="a89edda0-6275-44e5-8ce8-2cc5f3cb601e" class=""><code>app.component.html</code></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="f77b0106-ae73-4964-879b-30b85bbd8d4d" class="code"><code class="language-HTML">    &lt;article&gt;
+      &lt;h1&gt;Blog Post&lt;/h1&gt;
+      &lt;form
+        name=&quot;blogForm&quot;
+        [formGroup]=&quot;blogForm&quot;
+        (ngSubmit)=&quot;handleFormSubmit()&quot;
+      &gt;
+        &lt;section&gt;
+          &lt;label for=&quot;title&quot;&gt;Post Title&lt;/label&gt;
+          &lt;input type=&quot;text&quot; id=&quot;title&quot; formControlName=&quot;title&quot; /&gt;
+
+          &lt;label for=&quot;body&quot;&gt;Post Body&lt;/label&gt;
+          &lt;textarea
+            id=&quot;body&quot;
+            cols=&quot;30&quot;
+            rows=&quot;10&quot;
+            formControlName=&quot;body&quot;
+          &gt;&lt;/textarea&gt;
+        &lt;/section&gt;
+        &lt;button type=&quot;submit&quot;&gt;Submit Post&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/article&gt;</code></pre><hr id="873c4f82-45bb-42e0-a398-fbaa57139106"/><h1 id="db821f0d-ec12-4775-9c4e-b8b3b104076b" class="">Dependency Injection (DI)</h1><blockquote id="0fec3961-cb28-4f98-8449-e54a75b3f039" class="">assignment covered in lecture: <code>11-dependency-injection</code></blockquote><p id="b6d9c34b-e0cf-4fc6-9767-20d2223e0ec4" class="">Is a design pattern mechanism in computer science and is not angular specific. </p><p id="925b5e51-4f00-4094-bcb0-20195a6b8859" class="">Used for creating and delivering some part of an app to other parts of an app that require them. </p><p id="7ef288bc-0a3e-4f60-b214-cc5716b2a45a" class="">Is implemented with <code>Injectable</code> decorator. </p><p id="4e06f7e6-a8c4-4c34-b715-7665990ef20f" class="">syntax: <div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6a9977e4-e436-44b4-a71d-13e3b1eb1765" class="code"><code class="language-JavaScript">import { Injectable } from &quot;@angular/core&quot;; 
+
+@Injectable({
+	providedIn: &#x27;root&#x27;, 
+})</code></pre></div></p><blockquote id="7d2b59ee-fae1-4627-84ea-08df7bbe5641" class=""><code>providedIn</code> defines the scope where the part of code is available for. If it is root then it will be available in the whole application and is quite common to see. But it can also be limited within a component and its children or between components. </blockquote><p id="830b9261-05a4-43bd-9893-31e29117423e" class="">Dependency Injection in Angular: </p><figure id="bdaaccbc-5148-4072-824b-f32732cdcaab"><a href="https://angular.io/guide/dependency-injection" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Angular</div><div class="bookmark-description">Angular is a platform for building mobile and desktop web applications.     Join the community of millions of developers who build compelling user interfaces with Angular.</div></div><div class="bookmark-href">https://angular.io/guide/dependency-injection</div></div></a></figure><p id="b0f4e067-5265-42ec-8b47-a42f9a7049d8" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

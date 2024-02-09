@@ -1,0 +1,793 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Templating </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1035a005-5bc2-4c7f-b9d7-8882bb4a7f51" class="page sans"><header><h1 class="page-title">Templating </h1><p class="page-description"></p></header><div class="page-body"><nav id="f1e9ffe4-0f72-4121-af4e-0bc0e41e9af3" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5a2dda78-f22e-44e1-9fea-e168e73edd32">Template Conditionals </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ecbbf9a8-c058-4094-8fd4-3fca0040ac5d">Control flow with <code>@if</code> </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5683d164-61e8-4eee-acf3-d94922b7e8aa">Control flow with <code>@switch</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b26332a5-093f-47bd-b3ce-97dc39ee7fb0">Template loops</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#33a63be8-731b-4ea9-a13c-f134630a69a4">Control flow with <code>@for</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c38c8800-3ab8-4187-928b-6483e852e789">Properties, Events &amp; Output</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d6dd69d3-2587-41f6-9392-28891bb37547">Property binding </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#91111759-812a-47be-8c47-459674a8d611">Event binding </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e9c872ae-b899-45ed-a7e4-575498610d90">Customizing Components with <code>@Input()</code> </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#850dccda-4f45-48fd-b0a4-1da6f20b4e6d">Send Information from a child component with custom events (<code>@Output()</code>)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a70c4ed6-4818-4249-9399-4f10882c0fd5">Inputs and Outputs </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f1add8e4-afe4-4ac5-be36-6c28c78620ee">Binding Outputs </a></div></nav><hr id="d029da4b-f7d1-4397-9f27-b0c5a6992a1a"/><p id="edd602d8-8aca-4b3e-88e9-3f8299c7ba0b" class="">
+</p><h1 id="5a2dda78-f22e-44e1-9fea-e168e73edd32" class="">Template Conditionals </h1><h2 id="ecbbf9a8-c058-4094-8fd4-3fca0040ac5d" class="">Control flow with <code>@if</code> </h2><p id="b634a9d1-6a60-4269-88d7-25d1c182597c" class="">It works just like if conditions in JavaScript. </p><p id="89ee2af7-e829-4349-b034-258d812896f3" class="">example: <div class="indented"><p id="0c6bcee0-a0aa-4038-af71-0548577e57da" class="">Basic usage with <code>@if</code> : </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="288f696e-7618-4482-8467-43894d590de0" class="code"><code class="language-JavaScript">&lt;section&gt; 
+	@if(expression){
+		&lt;p&gt; If case paragraph&lt;/p&gt;
+	}
+	&lt;p&gt; Normal flow paragraph&lt;/p&gt;
+&lt;/section&gt; </code></pre><p id="a0d3583c-a46d-4b4f-8a14-cb4cfa48137f" class="">Using <code>@if</code>  <code>@else if</code>  and <code>@else</code> </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="73ca4193-094c-4a06-84b5-a60113f00a42" class="code"><code class="language-JavaScript">import { Component } from &#x27;@angular/core&#x27;;
+import { AccountInfo } from &#x27;./account-info&#x27;;
+
+@Component({
+  selector: &#x27;app-root&#x27;,
+  standalone: true,
+  template: `
+    &lt;article class=&quot;card&quot;&gt;
+      &lt;h1 class=&quot;card-title&quot;&gt;Frontend Masters Express&lt;/h1&gt;
+      &lt;p class=&quot;card-number&quot;&gt;0000 0000 0000 0000&lt;/p&gt;
+      &lt;section class=&quot;membership-info&quot;&gt;
+        &lt;p&gt;
+          &lt;!-- name --&gt;
+          {{ account.name }}
+        &lt;/p&gt;
+        &lt;p&gt;Valid Thru: {{ account.validThru }}&lt;/p&gt;
+        &lt;p&gt;CVV: {{ account.CVV }}&lt;/p&gt;
+        &lt;p&gt;
+          &lt;!-- membership status --&gt;
+          @if (account.membershipStatus === &quot;gold&quot;) {
+          &lt;span class=&quot;badge gold&quot;&gt;Gold&lt;/span&gt;
+          }@else if (account.membershipStatus===&#x27;platinum&#x27;) {
+          &lt;span class=&quot;badge platinum&quot;&gt;Platinum&lt;/span&gt;
+          }@else {
+          &lt;span class=&quot;badge silver&quot;&gt;Silver&lt;/span&gt;
+          }
+        &lt;/p&gt;
+      &lt;/section&gt;
+    &lt;/article&gt;
+  `,
+  styleUrl: &#x27;./app.component.css&#x27;,
+})
+export class AppComponent {
+  account: AccountInfo = {
+    name: &#x27;Melisa Evan&#x27;,
+    membershipStatus: &#x27;gold&#x27;,
+    validThru: &#x27;12/2022&#x27;,
+    CVV: &#x27;123&#x27;,
+  };
+}</code></pre></div></p><h2 id="5683d164-61e8-4eee-acf3-d94922b7e8aa" class="">Control flow with <code>@switch</code></h2><p id="d743fd12-8da5-4661-968b-a5fe9d061b16" class=""> example: <div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="72b569cf-4428-49a3-855f-7aae8d1c1afc" class="code"><code class="language-JavaScript">&lt;!-- membership status --&gt;
+&lt;p&gt;
+  @switch (account.membershipStatus) { 
+		@case (&#x27;gold&#x27;) {
+	  &lt;span span class=&quot;badge gold&quot;&gt;Gold&lt;/span&gt;
+	  } 
+		@case (&#x27;platinum&#x27;) {
+	  &lt;span span class=&quot;badge platinum&quot;&gt;Platinum&lt;/span&gt;
+	  } 
+		@default () {
+	  &lt;span class=&quot;badge silver&quot;&gt;Silver&lt;/span&gt;
+	  }
+	}
+&lt;/p&gt;</code></pre></div></p><p id="3d5f10da-7a9b-4d45-8ac0-d65b8f90585c" class="">
+</p><hr id="075ee3b0-1a15-4b7b-a358-74cd2d8a4321"/><h1 id="b26332a5-093f-47bd-b3ce-97dc39ee7fb0" class="">Template loops</h1><h2 id="33a63be8-731b-4ea9-a13c-f134630a69a4" class="">Control flow with <code>@for</code></h2><p id="754e5dbe-594a-45b9-97d2-b3656ae2e9c3" class="">example: <div class="indented"><p id="36f18e61-b510-49a2-be98-e0690b53052c" class="">Basic looping with array with <code>@for</code>  and <code>@empty</code> </p><blockquote id="e6241fb0-31d5-4cea-9f50-84c9083c3e87" class="">Using track makes the rendering more efficient. </blockquote><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="5b6d34c3-354c-4118-843a-7b20ca106c37" class="code"><code class="language-JavaScript">&lt;article&gt; 
+	@for(item of cart; track item.id){
+		&lt;p&gt; {{ item.price }} &lt;/p&gt;
+	} @empty{
+		&lt;p&gt; Your cart is empty &lt;/p&gt;
+	}
+&lt;/article&gt;</code></pre></div></p><p id="32b585cf-e8e9-4dbf-a62d-bbdc8fc70f83" class="">
+</p><hr id="ee67fd9e-ece8-4c36-a322-8dccc1b6c546"/><h1 id="c38c8800-3ab8-4187-928b-6483e852e789" class="">Properties, Events &amp; Output</h1><h2 id="d6dd69d3-2587-41f6-9392-28891bb37547" class="">Property binding </h2><p id="69cca4d5-f430-4cf7-bb8f-24828b4adb2a" class="">Properties in the templates can also be binded dynamically </p><p id="edd2ee70-e494-4ad9-a585-c064c9fc336e" class="">example: <div class="indented"><p id="ac3ee9f6-67a3-4224-9ff3-0bf1a716552b" class="">Setting property <code>disabled</code> to a button with <code>[disabled]</code>  property binding and <code>isDisabled</code>  value.  </p><blockquote id="ef557d53-5482-4736-a119-047cea4b9580" class="">NOTE: the value is expression when used with property binding (i.e with <code>[</code> and <code>]</code> )</blockquote><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="29dc8386-4966-4991-a796-c6ba4f77b1f6" class="code"><code class="language-JavaScript">@Component(){
+	template: `
+		&lt;button type=&quot;button&quot; [disabled]=&quot;isDisabled&quot;&gt;
+			Submit 
+		&lt;/button&gt;
+	`
+}
+
+export class AppComponent{
+	isDisabled = false; 
+}</code></pre></div></p><p id="3e9885c8-58d1-4d9e-b16f-6c511da869d7" class="">
+</p><h2 id="91111759-812a-47be-8c47-459674a8d611" class="">Event binding </h2><p id="c7ac539f-b1cb-4f17-84b2-4941a6bcabdb" class="">Event handling allows to responds to events in templates. </p><p id="eee83599-d7d3-4b97-b2d8-4213c5b66483" class="">example: <div class="indented"><p id="e5803f5b-c47c-47e9-8173-268c03551956" class="">handling <code>click</code>  event on a button with <code>(click)</code>  event binding and <code>handleClick()</code>  handler.  </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="8174667b-ad48-4ede-a6a9-c306278a3bf4" class="code"><code class="language-JavaScript">@Component(){
+	template: `
+		&lt;button type=&quot;button&quot; (click)=&quot;handleClick()&quot;&gt;
+			Submit 
+		&lt;/button&gt;
+	`
+}
+
+export class AppComponent{
+	handleClick(){
+    console.log(&quot;click triggred&quot;)
+  }  
+}</code></pre></div></p><p id="0983e826-7ec1-4653-bf63-d2366213354c" class="">
+</p><h2 id="e9c872ae-b899-45ed-a7e4-575498610d90" class="">Customizing Components with <code>@Input()</code> </h2><p id="4d96d12d-959c-4ea3-b256-ab2cf50ea7aa" class=""><code>@Input()</code>  allows to receive information to a component (like with <code>props</code>  in React)</p><p id="dc8c2b09-e3e2-482b-8d6c-84fb88894782" class="">Is regular <code>@Input()</code>  from previous versions of Angular. Nothing new with latest version. </p><p id="92241c49-d465-4fa5-afde-42ed8c6e9497" class="">documentation on <code>@Input()</code> : <a href="https://angular.io/guide/inputs-outputs#sending-data-to-a-child-component">https://angular.io/guide/inputs-outputs#sending-data-to-a-child-component</a></p><h2 id="850dccda-4f45-48fd-b0a4-1da6f20b4e6d" class="">Send Information from a child component with custom events (<code>@Output()</code>)</h2><p id="cecc858a-d895-452e-a796-94f311dd0603" class=""><code>@Output()</code>  allows to send data from a component through an event. </p><p id="81d993cd-e23e-48a3-98e6-39b4bf788927" class=""><code>EventEmitter</code>  used in order to create an event with <code>@Output()</code> </p><p id="04d0d4d7-4ae8-4e1d-98f9-fa1d04039955" class="">example: <div class="indented"><p id="b50ff0e4-8ae9-4347-b85f-dbc9153a550c" class="">Implementing <code>@Output()</code> in child component and emitting event. </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e69f5bf5-94e2-4771-bf6d-aa1fb07f1e35" class="code"><code class="language-JavaScript">@Component(){
+	template: `
+		&lt;button type=&quot;button&quot; (click)=&quot;addItem(&#x27;Item 1&#x27;)&quot;&gt;
+			Submit 
+		&lt;/button&gt;
+	`
+}
+
+export class ChildComponent{
+@Output() addItemEvent = new EventEmitter&lt;string&gt;(); 
+
+	addItem(addedItem: string){
+	  this.addItemEvent.emit(`Item added: ${addedItem}`)
+	}
+}</code></pre><p id="d919c2b9-c691-422b-95fa-dd4b99906c70" class="">Consuming the event emitted on parent directory <div class="indented"><blockquote id="f0084dfb-bce4-4d1b-9d98-74ed390e328f" class="">NOTE: <code>$event</code> has to be the same where ever it is used. It holds the value received from event and passes to the respective function which is handling the event. </blockquote></div></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="8fa3ccd1-e2fb-48e4-8ac9-993f13090f6e" class="code"><code class="language-JavaScript">@Component(){
+	template: `
+		&lt;app-child (addItemEvent)=&quot;addItem($event)&quot;/&gt;
+	`,
+	imports: [ChildComponent]
+}
+
+export class ParentComponent{
+	items: string[] = []
+
+	addItem(addedItem: string){
+	  this.items.push(addedItem); 
+	}
+}</code></pre></div></p><hr id="8023f5d8-0cfb-4099-b0c9-c571a8be12bc"/><h1 id="a70c4ed6-4818-4249-9399-4f10882c0fd5" class="">Inputs and Outputs </h1><p id="c314af35-326e-4143-b5d3-b24f9a255f1f" class="">documentation on <code>@Output()</code> : <a href="https://angular.io/guide/inputs-outputs#sending-data-to-a-parent-component">https://angular.io/guide/inputs-outputs#sending-data-to-a-parent-component</a></p><p id="cbfeb657-1eda-4906-8dd7-421fa5123b32" class="">solved assignment: <code>06-input-output</code> </p><hr id="24d9559b-379b-4354-8d6f-035889fad5e2"/><h1 id="f1add8e4-afe4-4ac5-be36-6c28c78620ee" class="">Binding Outputs </h1><p id="b6bbdef8-3d8d-4f48-bfff-483d60639c54" class="">solved assignment: <code>06-input-output</code> </p><blockquote id="83d27b09-4706-4276-a5f4-38c431cd2782" class="">Prop drilling (passing data from one component to another in multiple levels) isn’t a great way to pass data. It’s better to use a services which will help to keep the values globally and implement them. </blockquote></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
