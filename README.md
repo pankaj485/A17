@@ -1,6 +1,13 @@
+- [Workshop notes](#workshop-notes)
 - [What to install](#what-to-install)
 - [How to run these lesson](#how-to-run-these-lesson)
 - [Lesson Links](#lesson-links)
+
+## Workshop notes
+
+Access the workshop notes [here](https://pankaj485.github.io/A17/notes/index.html)
+
+All the workshop related notes are kept inside of `/notes` directory.
 
 ## What to install
 
